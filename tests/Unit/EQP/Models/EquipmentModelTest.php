@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\EQP\Models;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\EQP\Models\EquipmentConfig;
+use App\EQP\Models\Equipment;
 
-class EquipmentConfigModelTest extends TestCase
+class EquipmentModelTest extends TestCase
 {
     use DatabaseTransactions;
 
     public function testTableExistanceAndStructuralIntegrity()
     {
-        $model = factory(EquipmentConfig::class)->create();
+        $model = factory(Equipment::class)->create();
 
-        $this->assertDatabaseHas('equipment_configs', [
-            'key' => $model->key
+        $this->assertDatabaseHas('equipments', [
+            'id' => $model->id
         ]);
     }
 }
