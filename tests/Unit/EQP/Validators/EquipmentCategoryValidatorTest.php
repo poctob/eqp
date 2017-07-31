@@ -20,7 +20,7 @@ class EquipmentCategoryValidatorTest extends ValidatorTestBase
         return new EquipmentCategoryValidator();
     }
     
-    public function testRunAllTests()
+    public function testRunAllTestsForEquipmentCategoryValidator()
     {
         $this->ifEntityIsNullErrorIsPresent();
         $this->ifFieldIsEmptyErrorIsPresent('name');

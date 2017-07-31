@@ -11,21 +11,25 @@ class EquipmentCategoryRepository extends Repository
 	}
 
 	protected function createEntityFromJSON($json) {
+	
+		$object = (array)json_decode($json);
 
 		$entity = new EquipmentCategory();
-		$entity->ispublic = $json['ispublic'];
-		$entity->name = $json['name'];
-		$entity->description = $json['description'];
-		$entity->notes = $json['notes'];
+		$entity->ispublic = $object['ispublic'];
+		$entity->name = $object['name'];
+		$entity->description = $object['description'];
+		$entity->notes = $object['notes'];
 
 		return $entity;
 	}
 
 	protected function updateEntityFromJSON(&$entity, $json) {
 
-		$entity->ispublic = $json['ispublic'];
-		$entity->name = $json['name'];
-		$entity->description = $json['description'];
-		$entity->notes = $json['notes'];
+		$object = (array)json_decode($json);
+		
+		$entity->ispublic = $object['ispublic'];
+		$entity->name = $object['name'];
+		$entity->description = $object['description'];
+		$entity->notes = $object['notes'];
 	}
 }

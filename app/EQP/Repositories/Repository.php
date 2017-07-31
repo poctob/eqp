@@ -20,7 +20,7 @@ abstract class Repository
 
     public function save($entity)
     {
-        $entity->save();
+        return $entity->save();
     }
 
     public function saveFromJSON($json)
@@ -50,7 +50,12 @@ abstract class Repository
 
     public function delete($id)
     {
-        return $this->getEntityName()::destroy($id);
+        $entity = $this->getById($id);
+
+        if(isset($entity))
+        {
+            return $entity->delete();
+        }    
     }
 
 }

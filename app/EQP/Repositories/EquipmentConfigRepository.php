@@ -12,16 +12,20 @@ class EquipmentConfigRepository extends Repository
 
     protected function createEntityFromJSON($json)
     {
+		$object = (array)json_decode($json);
+
         $entity = new EquipmentConfig();
-        $entity->key = $json['key'];
-        $entity->value = $json['value'];
+        $entity->key = $object['key'];
+        $entity->value = $object['value'];
 
         return $entity;
     }
 
     protected function updateEntityFromJSON(&$entity, $json)
     {
-        $entity->key = $json['key'];
-        $entity->value = $json['value'];
+        $object = (array)json_decode($json);
+
+        $entity->key = $object['key'];
+        $entity->value = $object['value'];
     }
 }

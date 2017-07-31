@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class ValidatorTestBase extends TestCase
 {
+    use DatabaseTransactions;
+    
     private $model;
     private $validator;
 
