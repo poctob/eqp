@@ -10,22 +10,19 @@ class EquipmentConfigRepository extends Repository
         return 'App\EQP\Models\EquipmentConfig';
     }
 
-    protected function createEntityFromJSON($json)
+    protected function createEntityFromArray($data)
     {
-		$object = (array)json_decode($json);
 
         $entity = new EquipmentConfig();
-        $entity->key = $object['key'];
-        $entity->value = $object['value'];
+        $entity->key = $data['key'];
+        $entity->value = $data['value'];
 
         return $entity;
     }
 
-    protected function updateEntityFromJSON(&$entity, $json)
+    protected function updateEntityFromArray(&$entity, $data)
     {
-        $object = (array)json_decode($json);
-
-        $entity->key = $object['key'];
-        $entity->value = $object['value'];
+        $entity->key = $data['key'];
+        $entity->value = $data['value'];
     }
 }

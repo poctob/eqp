@@ -10,26 +10,22 @@ class EquipmentCategoryRepository extends Repository
 		return 'App\EQP\Models\EquipmentCategory';
 	}
 
-	protected function createEntityFromJSON($json) {
-	
-		$object = (array)json_decode($json);
+	protected function createEntityFromArray($data) {
 
 		$entity = new EquipmentCategory();
-		$entity->ispublic = $object['ispublic'];
-		$entity->name = $object['name'];
-		$entity->description = $object['description'];
-		$entity->notes = $object['notes'];
+		$entity->ispublic = $data['ispublic'];
+		$entity->name = $data['name'];
+		$entity->description = $data['description'];
+		$entity->notes = $data['notes'];
 
 		return $entity;
 	}
 
-	protected function updateEntityFromJSON(&$entity, $json) {
-
-		$object = (array)json_decode($json);
+	protected function updateEntityFromArray(&$entity, $data) {
 		
-		$entity->ispublic = $object['ispublic'];
-		$entity->name = $object['name'];
-		$entity->description = $object['description'];
-		$entity->notes = $object['notes'];
+		$entity->ispublic = $data['ispublic'];
+		$entity->name = $data['name'];
+		$entity->description = $data['description'];
+		$entity->notes = $data['notes'];
 	}
 }

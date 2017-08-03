@@ -61,29 +61,29 @@ abstract class RepositoryTestBase extends TestCase
         $this->assertEquals($this->model->$fieldName, $entity2->$fieldName);
     }
     
-    public function saveFromJSON() {
+    public function saveFromArray() {
 
         $this->setUp();
         $id = $this->model->id;
 
         unset($this->model->id);
-        $json = $this->model->toJson();
+        $data = $this->model->attributesToArray();
 
-        $entity = $this->repository->saveFromJSON($json);
+        $entity = $this->repository->saveFromArray($data);
 
         $this->assertEquals($id+1, $entity->id);
     }
 
     
-    public function updateFromJSON() {
+    public function updateFromArray() {
 
         $this->setUp();
         $id = $this->model->id;
         $fieldName = $this->changeModel($this->model);
 
-        $json = $this->model->toJson();
+        $data = $this->model->attributesToArray();
 
-        $result = $this->repository->updateFromJSON($json, $id);
+        $result = $this->repository->updateFromArray($data, $id);
         
         $this->assertTrue($result);
         $entity2 = $this->repository->getById($id);

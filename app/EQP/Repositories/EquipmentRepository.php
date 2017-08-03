@@ -10,28 +10,24 @@ class EquipmentRepository extends Repository
 		return 'App\EQP\Models\Equipment';
 	}
 
-	protected function createEntityFromJSON($json) {
-
-		$object = (array)json_decode($json);
+	protected function createEntityFromArray($data) {
 
 		$entity = new Equipment();
-		$entity->category_id = $object['category_id'];
-		$entity->status_id = $object['status_id'];
-		$entity->is_published = $object['is_published'];
-		$entity->is_active = $object['is_active'];
-		$entity->user_assigned_id = $object['user_assigned_id'];
+		$entity->category_id = $data['category_id'];
+		$entity->status_id = $data['status_id'];
+		$entity->is_published = $data['is_published'];
+		$entity->is_active = $data['is_active'];
+		$entity->user_assigned_id = $data['user_assigned_id'];
 
 		return $entity;
 	}
 
-	protected function updateEntityFromJSON(&$entity, $json) {
+	protected function updateEntityFromArray(&$entity, $data) {
 
-		$object = (array)json_decode($json);
-
-		$entity->category_id = $object['category_id'];
-		$entity->status_id = $object['status_id'];
-		$entity->is_published = $object['is_published'];
-		$entity->is_active = $object['is_active'];
-		$entity->user_assigned_id = $object['user_assigned_id'];
+		$entity->category_id = $data['category_id'];
+		$entity->status_id = $data['status_id'];
+		$entity->is_published = $data['is_published'];
+		$entity->is_active = $data['is_active'];
+		$entity->user_assigned_id = $data['user_assigned_id'];
 	}
 }

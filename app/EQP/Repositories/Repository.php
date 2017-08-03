@@ -5,8 +5,8 @@ namespace App\EQP\Repositories;
 abstract class Repository
 {
     abstract protected function getEntityName();
-    abstract protected function createEntityFromJSON($json);
-    abstract protected function updateEntityFromJSON(&$entity, $json);  
+    abstract protected function createEntityFromArray($data);
+    abstract protected function updateEntityFromArray(&$entity, $data);  
 
     public function getAll()
     {
@@ -23,9 +23,9 @@ abstract class Repository
         return $entity->save();
     }
 
-    public function saveFromJSON($json)
+    public function saveFromArray($data)
     {
-        $entity = $this->createEntityFromJSON($json);
+        $entity = $this->createEntityFromArray($data);
 
         if(isset($entity) && $entity->save())
         {
@@ -37,13 +37,13 @@ abstract class Repository
         }
     }
 
-    public function updateFromJSON($json, $id)
+    public function updateFromArray($data, $id)
     {
         $entity = $this->getById($id);
 
         if(isset($entity))
         {
-            $this->updateEntityFromJSON($entity, $json);                      
+            $this->updateEntityFromArray($entity, $data);                      
             return $entity->save();            
         }               
     }

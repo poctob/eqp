@@ -11,28 +11,24 @@ class EquipmentStatusRepository extends Repository
 		return 'App\EQP\Models\EquipmentStatus';
 	}
 
-	protected function createEntityFromJSON($json) {
-
-		$object = (array)json_decode($json);
+	protected function createEntityFromArray($data) {
 
 		$entity = new EquipmentStatus();
-		$entity->name = $object['name'];
-		$entity->description = $object['description'];
-		$entity->image_path = $object['image_path'];
-		$entity->color = $object['color'];
-		$entity->is_default = $object['is_default'];
+		$entity->name = $data['name'];
+		$entity->description = $data['description'];
+		$entity->image_path = $data['image_path'];
+		$entity->color = $data['color'];
+		$entity->is_default = $data['is_default'];
 
 		return $entity;
 	}
 
-	protected function updateEntityFromJSON(&$entity, $json) {
+	protected function updateEntityFromArray(&$entity, $data) {
 
-		$object = (array)json_decode($json);
-
-		$entity->name = $object['name'];
-		$entity->description = $object['description'];
-		$entity->image_path = $object['image_path'];
-		$entity->color = $object['color'];
-		$entity->is_default = $object['is_default'];
+		$entity->name = $data['name'];
+		$entity->description = $data['description'];
+		$entity->image_path = $data['image_path'];
+		$entity->color = $data['color'];
+		$entity->is_default = $data['is_default'];
 	}
 }

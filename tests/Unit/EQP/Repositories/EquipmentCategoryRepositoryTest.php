@@ -30,8 +30,8 @@ class EquipmentCategoryRepositoryTest extends RepositoryTestBase
         $this->getAll(); 
         $this->getById();
         $this->save();
-        $this->saveFromJSON();
-        $this->updateFromJSON();
+        $this->saveFromArray();
+        $this->updateFromArray();
         $this->deleteEntity();
     }
 }
