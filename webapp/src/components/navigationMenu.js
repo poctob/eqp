@@ -9,7 +9,6 @@ class NavigationMenu extends Component {
         super(props);
 
         this.state = {};
-        this.handleSelect = this.handleSelect.bind(this);
     }
 
     getInitialState () {
@@ -61,7 +60,7 @@ class NavigationMenu extends Component {
                 <Nav bsStyle="pills" activeKey={ this.state.activeKey == null ? 
                                                 this.props.defaultNavItem : 
                                                 this.state.activeKey } 
-                                    onSelect={ this.handleSelect }>
+                                    onSelect={ item => this.handleSelect(item) }>
 
                     {this.props.navItems.map(function (item) {
                         return (
@@ -70,7 +69,7 @@ class NavigationMenu extends Component {
                     }) }
                 </Nav>
                 <ConfigContainer 
-                    data = { this.getCurrentData(this.props.defaultNavItem) }
+                    data = { this.getCurrentData(this.state.activeKey == null ? this.props.defaultNavItem : this.state.activeKey) }
                 />
             </div>
         );

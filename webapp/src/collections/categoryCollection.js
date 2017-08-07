@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
 CategoryCollection = Backbone.Collection.extend({
   model: Model,
 
-  url: '/eqp/public/api/category',
+  url: 'eqp/public/api/category',
 
   headers: ['Name', 'Description', 'Is Public', 'Notes'],
 

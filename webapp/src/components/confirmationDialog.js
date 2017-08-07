@@ -5,10 +5,9 @@ import Modal from 'react-bootstrap/lib/Modal';
 
 class ConfirmationDialog extends Component{
 
-  getInitialState(){
-    return {
-      confirmed: false         
-    }
+  constructor(props) {
+    super(props);
+    this.state = { confirmed: false  };
   }
 
   close() {
@@ -41,7 +40,7 @@ class ConfirmationDialog extends Component{
 
     return(
       <div>
-        <Modal show={this.props.show} onHide={this.close}>
+        <Modal show={this.props.show} onHide={ () => this.close() }>
             <Modal.Header closeButton>
               <Modal.Title>{this.props.title}</Modal.Title>
             </Modal.Header>
@@ -51,8 +50,8 @@ class ConfirmationDialog extends Component{
               </Modal.Body>
               <Modal.Footer>
                 <ButtonToolbar>
-                  <Button bsStyle = 'success' onClick={this.setYes}>{this.props.yesButtonText}</Button>
-                  <Button bsStyle = 'danger' onClick={this.setNo}>{this.props.noButtonText}</Button>
+                  <Button bsStyle = 'success' onClick={ () => this.setYes() }>{this.props.yesButtonText}</Button>
+                  <Button bsStyle = 'danger' onClick={ () => this.setNo() }>{this.props.noButtonText}</Button>
                 </ButtonToolbar>
               </Modal.Footer>            
           </Modal>

@@ -25,7 +25,7 @@ class ConfigContainer extends Component {
       loading: false
     };
 
-    this.onAddItemFormSubmit = this.onAddItemFormSubmit.bind(this);
+    this.onSync = this.onSync.bind(this);
   }
 
   onAddItemFormSubmit(changedProperties) {
@@ -108,29 +108,29 @@ class ConfigContainer extends Component {
 
       <div>
         <div className = {this.state.loading ? '' : 'hidden'}>
-          <Spinner spinnerName='three-bounce' />
+          <Spinner name='three-bounce' />
         </div>
 
         <div className = {this.state.loading ? 'disabledContainer' : ''}>
 
           <div className='page-header'>{this.state.title}</div>
-          <Button bsStyle="primary" onClick={ () => this.handleNew() }>
+          <Button bsStyle="primary" onClick={ model => this.handleNew(model) }>
             <span className="glyphicon glyphicon-plus" aria-hidden="true"></span> {this.state.newButtonText}
           </Button>
 
           <ConfigTable
             data = {this.props.data !== undefined ? this.props.data : null}
-            handleDelete = { () => this.handleDelete() }
-            handleEdit = { () => this.handleEdit() }
+            handleDelete = { model => this.handleDelete(model) }
+            handleEdit = { model => this.handleEdit(model) }
             />
 
           <ConfirmationDialog
             title={this.state.confirmationTitle}
             text={this.state.confirmationText}
             show={this.state.showConfirmationDialog}
-            onClose = {this.onDeleteConfirmClose}
-            onConfirm = {this.onDeleteConfirm}
-            onDeny = {this.onDeleteConfirmClose}
+            onClose = { () => this.onDeleteConfirmClose() }
+            onConfirm = { () => this.onDeleteConfirm() }
+            onDeny = { () => this.onDeleteConfirmClose() }
             yesButtonText = {this.state.deleteYesButtonText}
             noButtonText = {this.state.deleteNoButtonText}
             />
@@ -139,7 +139,7 @@ class ConfigContainer extends Component {
             showAddModal = {this.state.showAddModal}
             title = {this.state.addModalTitle}
             onClose ={() => this.onAddModalClose() }
-            onSubmit = {this.onAddItemFormSubmit}
+            onSubmit = { props => this.onAddItemFormSubmit(props)}
             item = {this.state.editCandidate}
             layoutItems = {this.props.data.layoutItems}
             selectOptions = {this.props.data.selectOptions}

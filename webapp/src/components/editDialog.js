@@ -18,9 +18,6 @@ class EditDialog extends Component{
           editSaveButtonText: 'Save',
           editCancelButtonText: 'Cancel'
         };
-
-        this.buildFormControl = this.buildFormControl.bind(this);
-        this.submitForm = this.submitForm.bind(this);
     }
 
   close() {
@@ -47,16 +44,29 @@ class EditDialog extends Component{
 
   componentWillReceiveProps (nextProps) {
     var model = nextProps.item;
+
     if (model !== null) {
       this.setState({ model: model });
     } else {
       this.setState({ model: null });
     }
+
   }
 
   handleItemChange (e) {
     const changedValues = this.state.changedValues;
-    changedValues[e.target.id] = e.target.value;
+
+    if(e.target !== null && e.target !== undefined) {
+      changedValues[e.target.id] = e.target.value;
+
+      this.setState({ changedValues, });
+    }
+
+  }
+
+  setSelectItem (id, value ) {
+     const changedValues = this.state.changedValues;
+     changedValues[id] = value;
 
     this.setState({ changedValues, });
 
@@ -90,7 +100,7 @@ class EditDialog extends Component{
                       type= 'text'
                       defaultValue={this.state.model !== null ? this.state.model.get(layout.key) : layout.defaultValue}
                       placeholder={layout.placeholderText}
-                      onChange={this.handleItemChange}
+                      onChange={ item => this.handleItemChange(item)}
                       />
                   </FormGroup>
                 );
@@ -108,7 +118,7 @@ class EditDialog extends Component{
                 key = {layout.key}    
                 id = {layout.key}      
                 defaultChecked = {checked}                  
-                onChange={this.handleCheckBoxChange}>
+                onChange={item => this.handleCheckBoxChange(item) }>
                   {layout.editLabel}
               </Checkbox>
           );
@@ -124,7 +134,7 @@ class EditDialog extends Component{
                       componentClass="textarea"
                       defaultValue={this.state.model !== null ? this.state.model.get(layout.key) : layout.defaultValue}
                       placeholder={layout.placeholderText}
-                      onChange={this.handleItemChange}
+                      onChange={item => this.handleItemChange(item)}
                       />
                   </FormGroup>
                 );
@@ -133,12 +143,15 @@ class EditDialog extends Component{
           case 'select':
             
             if( this.props.selectOptions !== null) {
+              
                 options = this.props.selectOptions[layout.key];
             }
 
             if(options === undefined || options === null){
+
               options = [];
-            }
+
+            } 
 
             result = (
               <FormGroup
@@ -147,10 +160,11 @@ class EditDialog extends Component{
                     <ControlLabel>{layout.editLabel}</ControlLabel>
                     <FormControl
                       componentClass="select"                                             
-                      placeholder={layout.placeholderText}
-                      onChange={this.handleItemChange}                                    
+                      defaultValue={this.state.model !== null ? this.state.model.get(layout.key) : "none"}
+                      onChange={item => this.handleItemChange(item)}                                    
                       >
-                       
+                      <option value="none" disabled>{layout.placeholderText}</option>
+
                       {options.map(function (item) {
                           return (
                               <option 
@@ -188,10 +202,10 @@ class EditDialog extends Component{
           <Modal.Header closeButton>
             <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>
-          <form onSubmit={this.submitForm}>
+          <form onSubmit={item => this.submitForm(item)}>
             <Modal.Body>
 
-              { layoutItems.map(this.buildFormControl) }
+              { layoutItems.map(item => this.buildFormControl(item)) }
 
             </Modal.Body>
             <EditDialogFooter

@@ -48,11 +48,9 @@ class App extends Component {
       label: 'General',
       model: this.state.configCollection
     });
-
-    this.updateCollections();
   }
 
-  updateCollections() {
+  componentWillMount() {
     const equipmentCollection = this.state.equipmentCollection;
 
     equipmentCollection.statusCollection = this.state.statusCollection;
@@ -72,7 +70,7 @@ class App extends Component {
        <NavigationMenu
           navItems = { this.state.navItems }
           defaultNavItem = 'General'
-          onChangeCallBack = { this.onMenuChange }
+          onChangeCallBack = { item => this.onMenuChange(item) }
         />
         </div> 
     );

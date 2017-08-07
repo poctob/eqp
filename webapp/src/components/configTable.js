@@ -57,7 +57,7 @@ class ConfigTableList extends Component{
 
         if (this.props.data !== null) {
             this.props.data.models.forEach(function (item) {
-                rows.push(<ConfigTable.Row
+                rows.push(<ConfigTableRow
                     item={item}
                     key={item.cid}
                     handleDelete={this.props.handleDelete}
@@ -73,12 +73,16 @@ class ConfigTableList extends Component{
 }
 
 class ConfigTableRow extends Component {
-    getInitialState () {
-        return {
-            editButtonText: 'Edit',
-            deleteButtonText: 'Delete'
-        }
-    }
+
+    constructor(props) {
+    super(props);
+
+    this.state = {
+        editButtonText: 'Edit',
+        deleteButtonText: 'Delete'
+    };
+
+  }
 
     deleteItem () {
         if (this.props.handleDelete !== undefined) {
@@ -100,17 +104,17 @@ class ConfigTableRow extends Component {
             <tr>
                 {itemProperties.map(function (item) {
                     return (
-                        <ConfigTable.Row.Td
+                        <ConfigTableRowTd
                             key = { key++ }
                             item = {item} />
                     );
                 }) }
                 <td>
                     <ButtonToolbar>
-                        <Button bsStyle="warning" onClick={this.editItem}>
+                        <Button bsStyle="warning" onClick={ () => this.editItem() }>
                             <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> {this.state.editButtonText}
                         </Button>
-                        <Button bsStyle="danger" onClick={this.deleteItem}>
+                        <Button bsStyle="danger" onClick={ () => this.deleteItem() }>
                             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span> {this.state.deleteButtonText}
                         </Button>
                     </ButtonToolbar>
@@ -120,7 +124,7 @@ class ConfigTableRow extends Component {
     }
 }
 
-class ConfigTableRowId extends Component {
+class ConfigTableRowTd extends Component {
     render () {
         return (
             <td>{this.props.item}</td>
