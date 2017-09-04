@@ -21,3 +21,7 @@ Route::resource('/status', 'EquipmentStatusController', ['only' => [
 Route::resource('/equipment', 'EquipmentController',  ['only' => [
     'index', 'store','show', 'update', 'destroy'
 ]]);
+
+Route::resource('/staff', 'OSTStaffController',  ['only' => [
+    'index'
+]]);
