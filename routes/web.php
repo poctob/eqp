@@ -17,3 +17,7 @@ Route::get('/', function () {
 
 Route::get('/eqp','OSTStaffController@validateUser')
 ->middleware('validateOSTStaff');
+
+/*Route::get('/eqp', function () {
+    return File::get(public_path() . '/index.html');
+})->middleware('validateOSTStaff');*/

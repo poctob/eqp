@@ -19,4 +19,15 @@ class OSTSessionRepository extends Repository
 		
 		return null;
 	}
+
+	public function getValidByUserId($id) {
+		$now =date("Y-m-d H:i:s");
+
+		return $this->getEntityName()::where
+			([
+				['user_id', '=', $id],
+				['session_expire', '>', $now],
+			])->first();
+			
+	}
 }

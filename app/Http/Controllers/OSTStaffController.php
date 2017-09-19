@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\EQP\Repositories\OSTStaffRepository;
 use App\EQP\Repositories\OSTSessionRepository;
 
+use Illuminate\Http\Request;
+
 class OSTStaffController extends ConfigController
 {
     protected function getRepository() {
@@ -23,9 +25,18 @@ class OSTStaffController extends ConfigController
         }
     }
 
-    public function validateUser() 
+    public function validateUser(Request $request) 
     {
-        die('success');
+        if($request->has('jwttoken'))
+        {
+            print_r($request->input('jwttoken'));
+        }
+        else
+        {
+            die('token not found');
+        }
+
+        //return response()->file(public_path() . '/index.html');
     }
 
 }
