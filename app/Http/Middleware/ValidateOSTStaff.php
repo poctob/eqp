@@ -3,11 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\EQP\Models\OSTSession;
-use App\EQP\Models\OSTStaff;
-use App\EQP\Repositories\OSTStaffRepository;
-use App\EQP\Repositories\OSTSessionRepository;
-
+use Cookie;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -25,7 +21,7 @@ class ValidateOSTStaff
     {
         try {
             // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($request->query())) {
+            if (!$token = JWTAuth::attempt($request->query())) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -34,7 +30,8 @@ class ValidateOSTStaff
         }
 
         // all good so return the token
-       $request['jwttoken'] = $token;
+        $request->request->add(['jwt' => $token]);
+        Cookie::queue('jwt', $token, 180);
 
         return $next($request);
     }

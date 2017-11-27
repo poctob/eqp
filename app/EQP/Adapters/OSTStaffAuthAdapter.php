@@ -2,16 +2,18 @@
 
 namespace App\EQP\Adapters;
 
-use App\EQP\Models\OSTSession;
-use App\EQP\Models\OSTStaff;
-use App\EQP\Repositories\OSTStaffRepository;
 use App\EQP\Repositories\OSTSessionRepository;
+use App\EQP\Repositories\OSTStaffRepository;
+use App\EQP\Validators\SessionValidator;
+use App\EQP\Validators\StaffValidator;
 use Tymon\JWTAuth\Providers\Auth\AuthInterface;
 
 class OSTStaffAuthAdapter implements AuthInterface
 {
     private $sessionRepository;
     private $staffRepository;
+    private $staffValidator;
+    private $sesssionValidator;
 
     private $user;
 
@@ -19,6 +21,8 @@ class OSTStaffAuthAdapter implements AuthInterface
     {
         $this->sessionRepository = $sessionRepo;
         $this->staffRepository = $staffRepo;
+        $this->staffValidator = new StaffValidator();
+        $this->sessionValidator = new SessionValidator();
     }
 
     /**
@@ -29,22 +33,19 @@ class OSTStaffAuthAdapter implements AuthInterface
      */
     public function byCredentials(array $credentials = [])
     {
-        if(!array_key_exists('ost_session_id', $credentials)) 
-        {
-           return false;
+        if (!array_key_exists('ost_session_id', $credentials)) {
+            return false;
         }
 
         $session = $this->sessionRepository->getById($credentials['ost_session_id']);
 
-        if(!$this->validateSession($session))
-        {
+        if (!$this->sessionValidator->validate($session)) {
             return false;
         }
 
         $staff = $this->staffRepository->getById($session->user_id);
 
-        if(!$this->validateStaff($staff))
-        {
+        if (!$this->staffValidator->validate($staff)) {
             return false;
         }
         $this->user = $staff;
@@ -62,15 +63,13 @@ class OSTStaffAuthAdapter implements AuthInterface
     {
         $staff = $this->staffRepository->getById($id);
 
-        if(!$this->validateStaff($staff))
-        {
+        if (!$this->staffValidator->validate($staff)) {
             return false;
         }
 
         $session = $this->sessionRepository->getValidByUserId($id);
 
-        if($session == null)
-        {
+        if ($session == null) {
             return false;
         }
 
@@ -83,36 +82,9 @@ class OSTStaffAuthAdapter implements AuthInterface
      * Get the currently authenticated user.
      *
      * @return mixed
-     */     
+     */
     public function user()
     {
         return $this->user;
-    }
-
-    private function validateSession($session) 
-    {
-        $result = $session != null;
-
-        if($result)
-        {
-            $expiration = strtotime($session->session_expire);
-            $result = $expiration > time();
-        }
-
-        return $result;
-
-    }
-
-    private function validateStaff($staff) 
-    {
-        $result = $staff != null;
-
-        if($staff)
-        {
-            $result = $staff->isactive && $staff->isadmin;
-        }
-
-        return $result;
-
     }
 }

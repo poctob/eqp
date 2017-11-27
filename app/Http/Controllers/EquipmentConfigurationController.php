@@ -7,11 +7,13 @@ use App\EQP\Validators\EquipmentConfigValidator;
 
 class EquipmentConfigurationController extends ConfigController
 {
-    protected function getRepository() {
+    protected function getRepository()
+    {
         return new EquipmentConfigRepository();
     }
 
-    protected function getValidator() {
+    protected function getValidator()
+    {
         return new EquipmentConfigValidator();
     }
 }
